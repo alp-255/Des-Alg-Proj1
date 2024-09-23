@@ -28,15 +28,36 @@ void escArq(char arquivo[]){
     fclose(arq);
 }
 
+// Escolher qual pasta vai abrir:
+    // char esc[3];
+    // char arquivo[6] = "user";
+
+    // printf("Digite 1 para user 1 e 2 para user 2: \n");
+    // scanf("%s", esc);
+
+    // // escArq(strcat(strcat(arquivo, esc), "/"));  Adiciona a escolha e "/" ao final de "user"
+
+float lerArquivo(const char *variavel, const char *arquivo){
+    FILE *arq = fopen(arquivo, "r");
+
+    char linha[100];
+
+    while(fgets(linha, sizeof(linha), arq)){
+        char tmpVar[15];
+        int tmpVal;
+
+        if(sscanf(linha, "%[^ ] %d", tmpVar, &tmpVal) == 2){  // %[^ ] procura até o espaço, %d lê o valor da variável
+            if(strcmp(tmpVar, variavel) == 0){
+                fclose(arq);
+                return tmpVal;
+            }
+        }
+    }
+    return 0;
+}
+
 int main(){
-    menu();
-    char esc[3];
-    char arquivo[6] = "user";
-
-    printf("Digite 1 para user 1 e 2 para user 2: \n");
-    scanf("%s", esc);
-
-    escArq(strcat(strcat(arquivo, esc), "/")); // Adiciona a escolha e "/" ao final de "user"
+    printf("%f", lerArquivo("var2", "user1/var.txt"));
 
     return 0;
 }
