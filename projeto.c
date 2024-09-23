@@ -36,9 +36,7 @@ int main(){
     printf("Digite 1 para user 1 e 2 para user 2: \n");
     scanf("%s", esc);
 
-    strcat(arquivo, esc);
-    strcat(arquivo, "/");
+    escArq(strcat(strcat(arquivo, esc), "/")); // Adiciona a escolha e "/" ao final de "user"
 
-    escArq(arquivo);
     return 0;
 }
