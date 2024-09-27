@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include "funcsArquivos.h"
 
 void menu(){
     printf("Menu:\n");
@@ -57,7 +56,6 @@ float lerArquivo(const char *variavel, const char *arquivo){
     return 0;
 }
 
-<<<<<<< HEAD
 void escVar(const char *arquivo, const char *variavel, float valor){
     FILE *arq = fopen(arquivo, "r");
     
@@ -90,16 +88,9 @@ void escVar(const char *arquivo, const char *variavel, float valor){
 }
 
 int main(){
-    int i = 10;
-    int j = 20;
-
-    int k = soma(i, j);
-
-    printf("%d", k);
-=======
-int main(){
-    printf("%f", lerArquivo("var2", "user1/var.txt"));
->>>>>>> parent of cd8a290 (criei o escVar)
+    printf("%f\n", lerArquivo("var2", "user1/var.txt"));
+    escVar("user1/var.txt", "var2", 500);
+    printf("%f\n", lerArquivo("var2", "user1/var.txt"));
 
     return 0;
 }
