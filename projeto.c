@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "funcsArquivos.h"
 
 void menu(){
     printf("Menu:\n");
@@ -37,7 +38,7 @@ void escArq(char arquivo[]){
 
     // // escArq(strcat(strcat(arquivo, esc), "/"));  Adiciona a escolha e "/" ao final de "user"
 
-float lerVar(const char *variavel, const char *arquivo){
+float lerArquivo(const char *variavel, const char *arquivo){
     FILE *arq = fopen(arquivo, "r");
 
     char linha[100];
@@ -56,7 +57,8 @@ float lerVar(const char *variavel, const char *arquivo){
     return 0;
 }
 
-void escVar(const char *arquivo, const char *variavel, int valor){
+<<<<<<< HEAD
+void escVar(const char *arquivo, const char *variavel, float valor){
     FILE *arq = fopen(arquivo, "r");
     
     int achouVar = 0; // diz se achou a variavel no txt
@@ -65,13 +67,13 @@ void escVar(const char *arquivo, const char *variavel, int valor){
 
     while(fgets(linha, sizeof(linha), arq)){
         char tmpVar[15];
-        int tmpVal;
+        float tmpVal;
         
-        if(sscanf(linha, "%[^ ] %d", tmpVar, &tmpVal) == 2){
+        if(sscanf(linha, "%[^ ] %f", tmpVar, &tmpVal) == 2){
             if(strcmp(tmpVar, variavel) != 0){ // se as variaveis forem dif
-                snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%s %d\n", tmpVar, tmpVal);
+                snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%s %f\n", tmpVar, tmpVal);
             } else{
-                snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%s %d\n", tmpVar, valor);
+                snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%s %f\n", tmpVar, valor);
                 achouVar = 1;
             }
         } else{
@@ -88,13 +90,16 @@ void escVar(const char *arquivo, const char *variavel, int valor){
 }
 
 int main(){
-    printf("%f\n", lerVar("var2", "user1/var.txt"));
-    escVar("user1/var.txt", "var2", 300);
-    printf("%f\n", lerVar("var2", "user1/var.txt"));
-    escVar("user1/var.txt", "var2", 9);
-    printf("%f\n", lerVar("var2", "user1/var.txt"));
-    escVar("user1/var.txt", "var1", 666);
-    printf("%f\n", lerVar("var1", "user1/var.txt"));
+    int i = 10;
+    int j = 20;
+
+    int k = soma(i, j);
+
+    printf("%d", k);
+=======
+int main(){
+    printf("%f", lerArquivo("var2", "user1/var.txt"));
+>>>>>>> parent of cd8a290 (criei o escVar)
 
     return 0;
 }

@@ -1,3 +1,9 @@
-var1 666
-var2 9
+<<<<<<< HEAD
+var1 500.500000
+var2 900.000000
+var3 10.000000
+=======
+var1 2
+var2 100
 var3 5
+>>>>>>> parent of cd8a290 (criei o escVar)
