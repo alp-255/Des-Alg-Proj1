@@ -48,7 +48,7 @@ int login(){
         }
     }
     menu();
-    
+
     return user;
 }
 
@@ -79,15 +79,6 @@ void escExt(char arquivo[], float valor, char moeda[]){
     
     fclose(arq);
 }
-
-// Escolher qual pasta vai abrir:
-    // char esc[3];
-    // char arquivo[6] = "user";
-
-    // printf("Digite 1 para user 1 e 2 para user 2: \n");
-    // scanf("%s", esc);
-
-    // // escArq(strcat(strcat(arquivo, esc), "/"));  Adiciona a escolha e "/" ao final de "user"
 
 float lerVar(const char *arquivo, const char *variavel){
     FILE *arq = fopen(arquivo, "r");
