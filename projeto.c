@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "funcsArquivos.h"
 
 void menu(){
     printf("Menu:\n");
@@ -88,9 +89,12 @@ void escVar(const char *arquivo, const char *variavel, float valor){
 }
 
 int main(){
-    printf("%f\n", lerArquivo("var2", "user1/var.txt"));
-    escVar("user1/var.txt", "var2", 500);
-    printf("%f\n", lerArquivo("var2", "user1/var.txt"));
+    int i = 10;
+    int j = 20;
+
+    int k = soma(i, j);
+
+    printf("%d", k);
 
     return 0;
 }
