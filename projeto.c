@@ -3,18 +3,11 @@
 #include <time.h>
 
 int lerVarInt(const char *, const char *);
+float lerVar(const char *, const char *);
+void escVar(const char *, const char *, float);
+void escExt(char *, float, char *);
+void menu(int);
 
-void menu(){
-    printf("Menu:\n");
-    printf("1. Consultar Saldo\n"
-    "2. Consultar Extrato\n"
-    "3. Depositar Reais\n"
-    "4. Sacar Reais\n"
-    "5. Comprar Criptomoedas\n"
-    "6. Vender Criptomoedas\n"
-    "7. Atualizar Cotacao\n"
-    "8. Sair\n");
-}
 
 int login(){
     int user;
@@ -43,13 +36,36 @@ int login(){
         if(strcmp(senhaDigitada, senhaArq) != 0){
             printf("CPF e/ou senha errados!! Digite novamente\n");
         } else{
-            printf("Login realizado com sucesso. Bem-vindo, usuario %d!", user);
+            printf("Login realizado com sucesso. Bem-vindo, usuario %d!\n", user);
             break;
         }
     }
-    menu();
 
     return user;
+}
+
+void consSaldo(int user){
+    char arquivo[25];
+    while(1){
+        char senhaDigitada[10];
+        printf("Informe sua senha: ");
+        scanf("%s", senhaDigitada);
+        char senhaArq[10];
+        snprintf(arquivo, sizeof(arquivo), "user%d/cpfesenha.txt", user);
+        int senhaInt = lerVarInt(arquivo, "senha");
+        snprintf(senhaArq, sizeof(senhaArq), "%d", senhaInt);
+        if(strcmp(senhaDigitada, senhaArq) != 0){
+            printf("Senha incorreta!! Digite novamente\n");
+        } else{
+            break;
+        }
+    }
+    printf("Saldo da sua conta: \n");
+    printf("Reais: %.3f\n", lerVar(arquivo, "rSaldo"));
+    printf("BitCoin: %.3f\n", lerVar(arquivo, "bcSaldo"));
+    printf("Ethereum: %.3f\n", lerVar(arquivo, "ethSaldo"));
+    printf("Ripple: %.3f\n", lerVar(arquivo, "rpSaldo"));
+    menu(user);
 }
 
 void escExt(char arquivo[], float valor, char moeda[]){
@@ -149,9 +165,33 @@ void escVar(const char *arquivo, const char *variavel, float valor){
     }
 }
 
+void menu(int user){
+    int esc;
+    printf("Menu:\n");
+    printf("1. Consultar Saldo\n"
+    "2. Consultar Extrato\n"
+    "3. Depositar Reais\n"
+    "4. Sacar Reais\n"
+    "5. Comprar Criptomoedas\n"
+    "6. Vender Criptomoedas\n"
+    "7. Atualizar Cotacao\n"
+    "8. Sair\n");
+    printf("Digite sua escolha: ");
+    scanf("%d", &esc);
+    switch(esc){
+        case 1:
+            consSaldo(user);
+            break;
+        case 2:
+            printf("Escolha 2");
+            break;
+    }
+}
+
 int main(){
-    int nao = login();
-    printf("%d", nao);
+    int user = login();
+    menu(user);
+
     
     return 0;
 }
