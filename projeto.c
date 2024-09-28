@@ -16,7 +16,7 @@ void menu(){
     "8. Sair\n");
 }
 
-void login(){
+int login(){
     char cpfDigitado[11];
     printf("Digite seu CPF: ");
     scanf("%s", cpfDigitado);
@@ -28,10 +28,11 @@ void login(){
         snprintf(cpfArq, sizeof(cpfArq), "%d", cpfInt);
         if(strcmp(cpfDigitado, cpfArq) == 0){
             printf("Login pro user%d\n", i);
-            return;
+            return i;
         }
         
     }
+    return 0;
 }
 
 void escExt(char arquivo[], float valor, char moeda[]){
@@ -141,7 +142,8 @@ void escVar(const char *arquivo, const char *variavel, float valor){
 }
 
 int main(){
-    login();
+    int nao = login();
+    printf("%d", nao);
     
     return 0;
 }
