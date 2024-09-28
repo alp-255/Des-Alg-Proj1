@@ -17,22 +17,39 @@ void menu(){
 }
 
 int login(){
-    char cpfDigitado[11];
-    printf("Digite seu CPF: ");
-    scanf("%s", cpfDigitado);
-    char cpfArq[5];
-    char arquivo[20];
-    for(int i = 1; i <= 10; i++){
-        snprintf(arquivo, sizeof(arquivo), "user%d/cpfesenha.txt", i);
-        int cpfInt = lerVarInt(arquivo, "cpf");
-        snprintf(cpfArq, sizeof(cpfArq), "%d", cpfInt);
-        if(strcmp(cpfDigitado, cpfArq) == 0){
-            printf("Login pro user%d\n", i);
-            return i;
+    int user;
+    while(1){
+        char cpfDigitado[11];
+        printf("Digite seu CPF: ");
+        scanf("%s", cpfDigitado);
+        char cpfArq[5];
+        char arquivo[25];
+        for(int i = 1; i <= 10; i++){
+            snprintf(arquivo, sizeof(arquivo), "user%d/cpfesenha.txt", i);
+            int cpfInt = lerVarInt(arquivo, "cpf");
+            snprintf(cpfArq, sizeof(cpfArq), "%d", cpfInt);
+            if(strcmp(cpfDigitado, cpfArq) == 0){
+                printf("Login para o usuario %d\n", i);
+                user = i;
+                break;
+            }
         }
-        
+        char senhaDigitada[10];
+        printf("Digite sua senha: ");
+        scanf("%s", senhaDigitada);
+        char senhaArq[10];
+        int senhaInt = lerVarInt(arquivo, "senha");
+        snprintf(senhaArq, sizeof(senhaArq), "%d", senhaInt);
+        if(strcmp(senhaDigitada, senhaArq) != 0){
+            printf("CPF e/ou senha errados!! Digite novamente\n");
+        } else{
+            printf("Login realizado com sucesso. Bem-vindo, usuario %d!", user);
+            break;
+        }
     }
-    return 0;
+    menu();
+    
+    return user;
 }
 
 void escExt(char arquivo[], float valor, char moeda[]){
