@@ -2,6 +2,8 @@
 #include <string.h>
 #include <time.h>
 
+int lerVarInt(const char *, const char *);
+
 void menu(){
     printf("Menu:\n");
     printf("1. Consultar Saldo\n"
@@ -12,6 +14,24 @@ void menu(){
     "6. Vender Criptomoedas\n"
     "7. Atualizar Cotacao\n"
     "8. Sair\n");
+}
+
+void login(){
+    char cpfDigitado[11];
+    printf("Digite seu CPF: ");
+    scanf("%s", cpfDigitado);
+    char cpfArq[5];
+    char arquivo[20];
+    for(int i = 1; i <= 10; i++){
+        snprintf(arquivo, sizeof(arquivo), "user%d/cpfesenha.txt", i);
+        int cpfInt = lerVarInt(arquivo, "cpf");
+        snprintf(cpfArq, sizeof(cpfArq), "%d", cpfInt);
+        if(strcmp(cpfDigitado, cpfArq) == 0){
+            printf("Login pro user%d\n", i);
+            return;
+        }
+        
+    }
 }
 
 void escExt(char arquivo[], float valor, char moeda[]){
@@ -52,6 +72,25 @@ void escExt(char arquivo[], float valor, char moeda[]){
     // // escArq(strcat(strcat(arquivo, esc), "/"));  Adiciona a escolha e "/" ao final de "user"
 
 float lerVar(const char *arquivo, const char *variavel){
+    FILE *arq = fopen(arquivo, "r");
+
+    char linha[100];
+
+    while(fgets(linha, sizeof(linha), arq)){
+        char tmpVar[15];
+        float tmpVal;
+
+        if(sscanf(linha, "%[^ ] %f", tmpVar, &tmpVal) == 2){  // %[^ ] procura até o espaço, %d lê o valor da variável
+            if(strcmp(tmpVar, variavel) == 0){
+                fclose(arq);
+                return tmpVal;
+            }
+        }
+    }
+    return 0;
+}
+
+int lerVarInt(const char *arquivo, const char *variavel){
     FILE *arq = fopen(arquivo, "r");
 
     char linha[100];
@@ -102,7 +141,7 @@ void escVar(const char *arquivo, const char *variavel, float valor){
 }
 
 int main(){
-    
+    login();
     
     return 0;
 }

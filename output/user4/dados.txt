@@ -1,5 +1,3 @@
-cpf 4
-senha 42345
 rSaldo 0
 rCota 0
 bcSaldo 0
