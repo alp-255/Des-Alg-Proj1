@@ -1,0 +1,10 @@
+cpf 6
+senha 62345
+rSaldo 0
+rCota 0
+bcSaldo 0
+bcCota 0
+ethSaldo 0
+ethCota 0
+rpSaldo 0
+rpCota 0

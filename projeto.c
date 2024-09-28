@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "funcsArquivos.h"
+#include <time.h>
 
 void menu(){
     printf("Menu:\n");
@@ -14,18 +14,31 @@ void menu(){
     "8. Sair\n");
 }
 
-void escArq(char arquivo[]){
+void escExt(char arquivo[], float valor, char moeda[]){
     char tmp[10];
     strcpy(tmp, arquivo);
 
-    strcat(tmp, "teste.txt");
+    strcat(tmp, "extrato.txt");
 
     FILE *arq = fopen(tmp, "a");
 
     if(arq == NULL){
         printf("erro\n");
     }
-    fprintf(arq, "teste\n");
+
+    time_t t;
+    time(&t); // le o horario atual pra imprimir o extrato
+    
+    if(strcmp(moeda, "r") == 0){
+        fprintf(arq, "Depositado %f em reais na data %s", valor, ctime(&t));
+    } else if(strcmp(moeda, "bc") == 0){
+        fprintf(arq, "Depositado %f em bitcoin na data %s", valor, ctime(&t));
+    } else if(strcmp(moeda, "eth") == 0){
+        fprintf(arq, "Depositado %f em ethereum na data %s", valor, ctime(&t));
+    } else{
+        fprintf(arq, "Depositado %f em ripple na data %s", valor, ctime(&t));
+    }
+    
     fclose(arq);
 }
 
@@ -38,7 +51,7 @@ void escArq(char arquivo[]){
 
     // // escArq(strcat(strcat(arquivo, esc), "/"));  Adiciona a escolha e "/" ao final de "user"
 
-float lerArquivo(const char *variavel, const char *arquivo){
+float lerVar(const char *arquivo, const char *variavel){
     FILE *arq = fopen(arquivo, "r");
 
     char linha[100];
@@ -89,12 +102,7 @@ void escVar(const char *arquivo, const char *variavel, float valor){
 }
 
 int main(){
-    int i = 10;
-    int j = 20;
-
-    int k = soma(i, j);
-
-    printf("%d", k);
-
+    
+    
     return 0;
 }
