@@ -274,8 +274,8 @@ void escVar(const char *arquivo, const char *variavel, float valor){
     FILE *arq = fopen(arquivo, "r");
     
     int achouVar = 0; // diz se achou a variavel no txt
-    char linha[200];
-    char buffer[100] = "";
+    char linha[100];
+    char buffer[200] = "";
 
     while(fgets(linha, sizeof(linha), arq)){
         char tmpVar[15];
@@ -337,10 +337,8 @@ void menu(int user){
 }
 
 int main(){
-    // int user = login();
-    // menu(user);
-    // TA DANDO PAU NO ESCREVER VARIAVEL
-    escVar("user3/dados.txt", "ethSaldo", 200);
+    int user = login();
+    menu(user);
     
     return 0;
 }
