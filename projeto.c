@@ -184,6 +184,7 @@ void compCrip(int user){
                 } else{
                     escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txBc)));
                     escVar(arquivo, "bcSaldo", (valor/(lerVar(arquivo, "bcCota"))));
+                    escExt(valor/(lerVar(arquivo, "bcCota")), "bc", 3, user);
                     printf("Compra realizada com sucesso!!\n");
                     break;
                 }
@@ -199,6 +200,7 @@ void compCrip(int user){
                 } else{
                     escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txEth)));
                     escVar(arquivo, "ethSaldo", (valor/(lerVar(arquivo, "ethCota"))));
+                    escExt(valor/(lerVar(arquivo, "ethCota")), "eth", 3, user);
                     printf("Compra realizada com sucesso!!\n");
                     break;
                 }
@@ -214,6 +216,7 @@ void compCrip(int user){
                 } else{
                     escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txRp)));
                     escVar(arquivo, "rpSaldo", (valor/(lerVar(arquivo, "rpCota"))));
+                    escExt(valor/(lerVar(arquivo, "rpCota")), "rp", 3, user);
                     printf("Compra realizada com sucesso!!\n");
                     break;
                 }
