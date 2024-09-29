@@ -157,7 +157,7 @@ void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 
     
     if(operacao == 1){
         if(strcmp(moeda, "r") == 0){
-        fprintf(arq, "Depositados %.3ff em Reais na data %s", valor, ctime(&t));
+        fprintf(arq, "Depositados %.3f em Reais na data %s", valor, ctime(&t));
         } else if(strcmp(moeda, "bc") == 0){
             fprintf(arq, "Depositados %.3f em BitCoin na data %s", valor, ctime(&t));
         } else if(strcmp(moeda, "eth") == 0){
