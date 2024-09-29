@@ -1,8 +1,8 @@
-rSaldo 9992984576.000000
+rSaldo 0
 rCota 0.000000
-bcSaldo 101.838837
-bcCota 65859.296875
+bcSaldo 0
+bcCota 357087.65
 ethSaldo 0.000000
-ethCota 2673.399902
+ethCota 14509.18
 rpSaldo 0.000000
-rpCota 3.330000
+rpCota 3.51
