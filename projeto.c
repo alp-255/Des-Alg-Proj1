@@ -5,7 +5,7 @@
 int lerVarInt(const char *, const char *);
 float lerVar(const char *, const char *);
 void escVar(const char *, const char *, float);
-void escExt(float, char *, int);
+void escExt(float, char *, int, int);
 void menu(int);
 
 
@@ -103,9 +103,10 @@ void depReais(int user){
     snprintf(arquivo, sizeof(arquivo), "user%d/dados.txt", user);
     escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo")) + valor);
     printf("Deposito realizado com sucesso!! Saldo atual: %f\n", lerVar(arquivo, "rSaldo"));
+    
 }
 
-void escExt(float valor, char moeda[], int user){
+void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 pra depositar, 2 pra sacar
     char arquivo[25];
     snprintf(arquivo, sizeof(arquivo), "user%d/extrato.txt", user);
 
@@ -118,15 +119,28 @@ void escExt(float valor, char moeda[], int user){
     time_t t;
     time(&t); // le o horario atual pra imprimir o extrato
     
-    if(strcmp(moeda, "r") == 0){
-        fprintf(arq, "Depositado %f em Reais na data %s", valor, ctime(&t));
-    } else if(strcmp(moeda, "bc") == 0){
-        fprintf(arq, "Depositado %f em BitCoin na data %s", valor, ctime(&t));
-    } else if(strcmp(moeda, "eth") == 0){
-        fprintf(arq, "Depositado %f em Ethereum na data %s", valor, ctime(&t));
+    if(operacao == 1){
+        if(strcmp(moeda, "r") == 0){
+        fprintf(arq, "Depositados %f em Reais na data %s", valor, ctime(&t));
+        } else if(strcmp(moeda, "bc") == 0){
+            fprintf(arq, "Depositados %f em BitCoin na data %s", valor, ctime(&t));
+        } else if(strcmp(moeda, "eth") == 0){
+            fprintf(arq, "Depositados %f em Ethereum na data %s", valor, ctime(&t));
+        } else{
+            fprintf(arq, "Depositados %f em Ripple na data %s", valor, ctime(&t));
+        }
     } else{
-        fprintf(arq, "Depositado %f em Ripple na data %s", valor, ctime(&t));
+        if(strcmp(moeda, "r") == 0){
+        fprintf(arq, "Sacados %f em Reais na data %s", valor, ctime(&t));
+        } else if(strcmp(moeda, "bc") == 0){
+            fprintf(arq, "Sacados %f em BitCoin na data %s", valor, ctime(&t));
+        } else if(strcmp(moeda, "eth") == 0){
+            fprintf(arq, "Sacados %f em Ethereum na data %s", valor, ctime(&t));
+        } else{
+            fprintf(arq, "Sacados %f em Ripple na data %s", valor, ctime(&t));
+        }
     }
+    
     
     fclose(arq);
     menu(user);
