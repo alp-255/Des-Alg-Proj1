@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
@@ -316,6 +317,21 @@ void venCrip(int user){
     menu(user);
 }
 
+void atualizar(int user){
+    float valor = (float)rand() / (float)RAND_MAX;
+    
+    valor = (valor * 0.1) + 0.95;
+    char arquivo[25];
+    for(int i = 1; i <= 10; i++){
+        snprintf(arquivo, sizeof(arquivo), "user%d/dados.txt", i);
+        escVar(arquivo, "bcCota", (lerVar(arquivo, "bcCota")) * valor);
+        escVar(arquivo, "ethCota", (lerVar(arquivo, "ethCota")) * valor);
+        escVar(arquivo, "rpCota", (lerVar(arquivo, "rpCota")) * valor);
+    }
+    printf("Cotas atualizadas com sucesso!!");
+    menu(user);
+}
+
 void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 pra depositar, 2 pra sacar, 3 pra comprar, 4 pra vender
     char arquivo[25];
     snprintf(arquivo, sizeof(arquivo), "user%d/extrato.txt", user);
@@ -477,10 +493,16 @@ void menu(int user){
             break;
         case 6:
             venCrip(user);
+        case 7:
+            atualizar(user);
+        case 8:
+            printf("Saindo do programa, tchau!!!!");
+            exit(0);
     }
 }
 
 int main(){
+    srand((unsigned int)time(NULL));
     int user = login();
     menu(user);
     
