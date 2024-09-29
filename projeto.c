@@ -60,6 +60,7 @@ void consSaldo(int user){
             break;
         }
     }
+    snprintf(arquivo, sizeof(arquivo), "user%d/dados.txt", user);
     printf("Saldo da sua conta: \n");
     printf("Reais: %.3f\n", lerVar(arquivo, "rSaldo"));
     printf("BitCoin: %.3f\n", lerVar(arquivo, "bcSaldo"));
@@ -104,6 +105,40 @@ void depReais(int user){
     escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo")) + valor);
     printf("Deposito realizado com sucesso!! Saldo atual: %f\n", lerVar(arquivo, "rSaldo"));
     escExt(valor, "r", 1, user);
+    menu(user);
+}
+
+void sacarReais(int user){
+    char arquivo[25];
+    while(1){
+        char senhaDigitada[10];
+        printf("Informe sua senha: ");
+        scanf("%s", senhaDigitada);
+        char senhaArq[10];
+        snprintf(arquivo, sizeof(arquivo), "user%d/cpfesenha.txt", user);
+        int senhaInt = lerVarInt(arquivo, "senha");
+        snprintf(senhaArq, sizeof(senhaArq), "%d", senhaInt);
+        if(strcmp(senhaDigitada, senhaArq) != 0){
+            printf("Senha incorreta!! Digite novamente\n");
+        } else{
+            break;
+        }
+    }
+
+    float valor;
+    snprintf(arquivo, sizeof(arquivo), "user%d/dados.txt", user);
+    while(1){
+        printf("Digite o valor a ser sacado: ");
+        scanf("%f", &valor);
+        if(valor > lerVar(arquivo, "rSaldo")){
+            printf("Saldo insuficiente!! Tente outro valor\n");
+        } else{
+            break;
+        }
+    }
+    escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo")) - valor);
+    printf("Saque realizado com sucesso!! Saldo atual: %f\n", lerVar(arquivo, "rSaldo"));
+    escExt(valor, "r", 2, user);
     menu(user);
 }
 
@@ -240,6 +275,8 @@ void menu(int user){
             break;
         case 3:
             depReais(user);
+        case 4:
+            sacarReais(user);
     }
 }
 
