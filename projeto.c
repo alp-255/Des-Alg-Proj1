@@ -167,7 +167,7 @@ void compCrip(int user){
     float valor;
     snprintf(arquivo, sizeof(arquivo), "user%d/dados.txt", user);
     printf("Saldo disponivel: %.3f\n", lerVar(arquivo, "rSaldo"));
-    printf("Criptomoedas disponíveis:\n");
+    printf("Criptomoedas disponiveis:\n");
     printf("1. Bitcoin\n"
     "2. Ethereum\n"
     "3. Ripple\n");
@@ -184,16 +184,46 @@ void compCrip(int user){
                 } else{
                     escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txBc)));
                     escVar(arquivo, "bcSaldo", (valor/(lerVar(arquivo, "bcCota"))));
-                    printf("Compra realizada com sucesso!!");
+                    printf("Compra realizada com sucesso!!\n");
                     break;
                 }
             }
-            
+            break;
+        case 2:
+            printf("Comprar Ethereum\n");
+            while(1){
+                printf("Digite o valor em reais: ");
+                scanf("%f", &valor);
+                if(valor * txEth > lerVar(arquivo, "rSaldo")){
+                    printf("Saldo insuficiente!! Digite outro\n");
+                } else{
+                    escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txEth)));
+                    escVar(arquivo, "ethSaldo", (valor/(lerVar(arquivo, "ethCota"))));
+                    printf("Compra realizada com sucesso!!\n");
+                    break;
+                }
+            }
+            break;
+        case 3:
+            printf("Comprar Ripple\n");
+            while(1){
+                printf("Digite o valor em reais: ");
+                scanf("%f", &valor);
+                if(valor * txRp > lerVar(arquivo, "rSaldo")){
+                    printf("Saldo insuficiente!! Digite outro\n");
+                } else{
+                    escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txRp)));
+                    escVar(arquivo, "rpSaldo", (valor/(lerVar(arquivo, "rpCota"))));
+                    printf("Compra realizada com sucesso!!\n");
+                    break;
+                }
+            }
+            break;
     }
-
+    menu(user);
 }
 
-void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 pra depositar, 2 pra sacar
+void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 pra depositar, 2 pra sacar, 3 pra comprar, 4 pra vender
     char arquivo[25];
     snprintf(arquivo, sizeof(arquivo), "user%d/extrato.txt", user);
 
@@ -206,29 +236,48 @@ void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 
     time_t t;
     time(&t); // le o horario atual pra imprimir o extrato
     
-    if(operacao == 1){
-        if(strcmp(moeda, "r") == 0){
-        fprintf(arq, "Depositados %.3f em Reais na data %s", valor, ctime(&t));
-        } else if(strcmp(moeda, "bc") == 0){
-            fprintf(arq, "Depositados %.3f em BitCoin na data %s", valor, ctime(&t));
-        } else if(strcmp(moeda, "eth") == 0){
-            fprintf(arq, "Depositados %.3f em Ethereum na data %s", valor, ctime(&t));
-        } else{
-            fprintf(arq, "Depositados %.3f em Ripple na data %s", valor, ctime(&t));
-        }
-    } else{
-        if(strcmp(moeda, "r") == 0){
-        fprintf(arq, "Sacados %.3f em Reais na data %s", valor, ctime(&t));
-        } else if(strcmp(moeda, "bc") == 0){
-            fprintf(arq, "Sacados %.3f em BitCoin na data %s", valor, ctime(&t));
-        } else if(strcmp(moeda, "eth") == 0){
-            fprintf(arq, "Sacados %.3f em Ethereum na data %s", valor, ctime(&t));
-        } else{
-            fprintf(arq, "Sacados %.3f em Ripple na data %s", valor, ctime(&t));
-        }
+    switch(operacao){
+        case 1:
+            if(strcmp(moeda, "r") == 0){
+                fprintf(arq, "Depositados %.3f em Reais na data %s", valor, ctime(&t));
+            } else if(strcmp(moeda, "bc") == 0){
+                fprintf(arq, "Depositados %.3f em BitCoin na data %s", valor, ctime(&t));
+            } else if(strcmp(moeda, "eth") == 0){
+                fprintf(arq, "Depositados %.3f em Ethereum na data %s", valor, ctime(&t));
+            } else{
+                fprintf(arq, "Depositados %.3f em Ripple na data %s", valor, ctime(&t));
+            }
+            break;
+        case 2:
+            if(strcmp(moeda, "r") == 0){
+                fprintf(arq, "Sacados %.3f em Reais na data %s", valor, ctime(&t));
+            } else if(strcmp(moeda, "bc") == 0){
+                fprintf(arq, "Sacados %.3f em BitCoin na data %s", valor, ctime(&t));
+            } else if(strcmp(moeda, "eth") == 0){
+                fprintf(arq, "Sacados %.3f em Ethereum na data %s", valor, ctime(&t));
+            } else{
+                fprintf(arq, "Sacados %.3f em Ripple na data %s", valor, ctime(&t));
+            }
+            break;
+        case 3:
+            if(strcmp(moeda, "bc") == 0){
+                fprintf(arq, "Comprados %.3f em BitCoin na data %s", valor, ctime(&t));
+            } else if(strcmp(moeda, "eth") == 0){
+                fprintf(arq, "Comprados %.3f em Ethereum na data %s", valor, ctime(&t));
+            } else{
+                fprintf(arq, "Comprados %.3f em Ripple na data %s", valor, ctime(&t));
+            }
+            break;
+        case 4:
+            if(strcmp(moeda, "bc") == 0){
+                fprintf(arq, "Vendidos %.3f em BitCoin na data %s", valor, ctime(&t));
+            } else if(strcmp(moeda, "eth") == 0){
+                fprintf(arq, "Vendidos %.3f em Ethereum na data %s", valor, ctime(&t));
+            } else{
+                fprintf(arq, "Vendidos %.3f em Ripple na data %s", valor, ctime(&t));
+            }
+            break;
     }
-    
-    
     fclose(arq);
 }
 
