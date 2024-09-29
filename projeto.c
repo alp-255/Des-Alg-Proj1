@@ -103,7 +103,8 @@ void depReais(int user){
     snprintf(arquivo, sizeof(arquivo), "user%d/dados.txt", user);
     escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo")) + valor);
     printf("Deposito realizado com sucesso!! Saldo atual: %f\n", lerVar(arquivo, "rSaldo"));
-    
+    escExt(valor, "r", 1, user);
+    menu(user);
 }
 
 void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 pra depositar, 2 pra sacar
@@ -121,29 +122,28 @@ void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 
     
     if(operacao == 1){
         if(strcmp(moeda, "r") == 0){
-        fprintf(arq, "Depositados %f em Reais na data %s", valor, ctime(&t));
+        fprintf(arq, "Depositados %.3ff em Reais na data %s", valor, ctime(&t));
         } else if(strcmp(moeda, "bc") == 0){
-            fprintf(arq, "Depositados %f em BitCoin na data %s", valor, ctime(&t));
+            fprintf(arq, "Depositados %.3f em BitCoin na data %s", valor, ctime(&t));
         } else if(strcmp(moeda, "eth") == 0){
-            fprintf(arq, "Depositados %f em Ethereum na data %s", valor, ctime(&t));
+            fprintf(arq, "Depositados %.3f em Ethereum na data %s", valor, ctime(&t));
         } else{
-            fprintf(arq, "Depositados %f em Ripple na data %s", valor, ctime(&t));
+            fprintf(arq, "Depositados %.3f em Ripple na data %s", valor, ctime(&t));
         }
     } else{
         if(strcmp(moeda, "r") == 0){
-        fprintf(arq, "Sacados %f em Reais na data %s", valor, ctime(&t));
+        fprintf(arq, "Sacados %.3f em Reais na data %s", valor, ctime(&t));
         } else if(strcmp(moeda, "bc") == 0){
-            fprintf(arq, "Sacados %f em BitCoin na data %s", valor, ctime(&t));
+            fprintf(arq, "Sacados %.3f em BitCoin na data %s", valor, ctime(&t));
         } else if(strcmp(moeda, "eth") == 0){
-            fprintf(arq, "Sacados %f em Ethereum na data %s", valor, ctime(&t));
+            fprintf(arq, "Sacados %.3f em Ethereum na data %s", valor, ctime(&t));
         } else{
-            fprintf(arq, "Sacados %f em Ripple na data %s", valor, ctime(&t));
+            fprintf(arq, "Sacados %.3f em Ripple na data %s", valor, ctime(&t));
         }
     }
     
     
     fclose(arq);
-    menu(user);
 }
 
 float lerVar(const char *arquivo, const char *variavel){
