@@ -95,6 +95,16 @@ void consExt(int user){
     menu(user);
 }
 
+void depReais(int user){
+    float valor;
+    char arquivo[25];
+    printf("Digite o valor a ser depositado: ");
+    scanf("%f", &valor);
+    snprintf(arquivo, sizeof(arquivo), "user%d/dados.txt", user);
+    escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo")) + valor);
+    printf("Deposito realizado com sucesso!! Saldo atual: %f\n", lerVar(arquivo, "rSaldo"));
+}
+
 void escExt(float valor, char moeda[], int user){
     char arquivo[25];
     snprintf(arquivo, sizeof(arquivo), "user%d/extrato.txt", user);
@@ -165,7 +175,7 @@ void escVar(const char *arquivo, const char *variavel, float valor){
     
     int achouVar = 0; // diz se achou a variavel no txt
     char linha[100];
-    char buffer[100];
+    char buffer[100] = "";
 
     while(fgets(linha, sizeof(linha), arq)){
         char tmpVar[15];
@@ -194,7 +204,7 @@ void escVar(const char *arquivo, const char *variavel, float valor){
 void menu(int user){
     int esc;
     
-    printf("----------------------------------------");
+    printf("----------------------------------------\n");
     printf("Menu:\n");
     printf("1. Consultar Saldo\n"
     "2. Consultar Extrato\n"
@@ -204,7 +214,7 @@ void menu(int user){
     "6. Vender Criptomoedas\n"
     "7. Atualizar Cotacao\n"
     "8. Sair\n");
-    printf("----------------------------------------");
+    printf("----------------------------------------\n");
     printf("Digite sua escolha: ");
     scanf("%d", &esc);
     switch(esc){
@@ -214,13 +224,14 @@ void menu(int user){
         case 2:
             consExt(user);
             break;
+        case 3:
+            depReais(user);
     }
 }
 
 int main(){
     int user = login();
     menu(user);
-
     
     return 0;
 }
