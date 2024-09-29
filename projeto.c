@@ -142,6 +142,57 @@ void sacarReais(int user){
     menu(user);
 }
 
+void compCrip(int user){
+    float txBc = 1.02;
+    float txEth = 1.01;
+    float txRp = 1.01;
+
+    char arquivo[25];
+    while(1){
+        char senhaDigitada[10];
+        printf("Informe sua senha: ");
+        scanf("%s", senhaDigitada);
+        char senhaArq[10];
+        snprintf(arquivo, sizeof(arquivo), "user%d/cpfesenha.txt", user);
+        int senhaInt = lerVarInt(arquivo, "senha");
+        snprintf(senhaArq, sizeof(senhaArq), "%d", senhaInt);
+        if(strcmp(senhaDigitada, senhaArq) != 0){
+            printf("Senha incorreta!! Digite novamente\n");
+        } else{
+            break;
+        }
+    }
+
+    int esc;
+    float valor;
+    snprintf(arquivo, sizeof(arquivo), "user%d/dados.txt", user);
+    printf("Saldo disponivel: %.3f\n", lerVar(arquivo, "rSaldo"));
+    printf("Criptomoedas disponíveis:\n");
+    printf("1. Bitcoin\n"
+    "2. Ethereum\n"
+    "3. Ripple\n");
+    printf("Digite sua escolha: ");
+    scanf("%d", &esc);
+    switch(esc){
+        case 1:
+            printf("Comprar Bitcoin\n");
+            while(1){
+                printf("Digite o valor em reais: ");
+                scanf("%f", &valor);
+                if(valor * txBc > lerVar(arquivo, "rSaldo")){
+                    printf("Saldo insuficiente!! Digite outro\n");
+                } else{
+                    escVar(arquivo, "rSaldo", (lerVar(arquivo, "rSaldo") - (valor * txBc)));
+                    escVar(arquivo, "bcSaldo", (valor/(lerVar(arquivo, "bcCota"))));
+                    printf("Compra realizada com sucesso!!");
+                    break;
+                }
+            }
+            
+    }
+
+}
+
 void escExt(float valor, char moeda[], int operacao, int user){ // operacao = 1 pra depositar, 2 pra sacar
     char arquivo[25];
     snprintf(arquivo, sizeof(arquivo), "user%d/extrato.txt", user);
@@ -223,7 +274,7 @@ void escVar(const char *arquivo, const char *variavel, float valor){
     FILE *arq = fopen(arquivo, "r");
     
     int achouVar = 0; // diz se achou a variavel no txt
-    char linha[100];
+    char linha[200];
     char buffer[100] = "";
 
     while(fgets(linha, sizeof(linha), arq)){
@@ -275,14 +326,21 @@ void menu(int user){
             break;
         case 3:
             depReais(user);
+            break;
         case 4:
             sacarReais(user);
+            break;
+        case 5:
+            compCrip(user);
+            break;
     }
 }
 
 int main(){
-    int user = login();
-    menu(user);
+    // int user = login();
+    // menu(user);
+    // TA DANDO PAU NO ESCREVER VARIAVEL
+    escVar("user3/dados.txt", "ethSaldo", 200);
     
     return 0;
 }
