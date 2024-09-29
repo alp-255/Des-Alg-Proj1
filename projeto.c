@@ -5,7 +5,7 @@
 int lerVarInt(const char *, const char *);
 float lerVar(const char *, const char *);
 void escVar(const char *, const char *, float);
-void escExt(char *, float, char *);
+void escExt(float, char *, int);
 void menu(int);
 
 
@@ -68,13 +68,38 @@ void consSaldo(int user){
     menu(user);
 }
 
-void escExt(char arquivo[], float valor, char moeda[]){
-    char tmp[10];
-    strcpy(tmp, arquivo);
+void consExt(int user){
+    char arquivo[25];
+    while(1){
+        char senhaDigitada[10];
+        printf("Informe sua senha: ");
+        scanf("%s", senhaDigitada);
+        char senhaArq[10];
+        snprintf(arquivo, sizeof(arquivo), "user%d/cpfesenha.txt", user);
+        int senhaInt = lerVarInt(arquivo, "senha");
+        snprintf(senhaArq, sizeof(senhaArq), "%d", senhaInt);
+        if(strcmp(senhaDigitada, senhaArq) != 0){
+            printf("Senha incorreta!! Digite novamente\n");
+        } else{
+            break;
+        }
+    }
+    snprintf(arquivo, sizeof(arquivo), "user%d/extrato.txt", user);
+    char linha[100];
+    FILE *arq = fopen(arquivo, "r");
+    printf("Extrato da sua conta: \n");
+    while(fgets(linha, 100, arq) != NULL){
+        printf("%s", linha);
+    }
+    fclose(arq);
+    menu(user);
+}
 
-    strcat(tmp, "extrato.txt");
+void escExt(float valor, char moeda[], int user){
+    char arquivo[25];
+    snprintf(arquivo, sizeof(arquivo), "user%d/extrato.txt", user);
 
-    FILE *arq = fopen(tmp, "a");
+    FILE *arq = fopen(arquivo, "a");
 
     if(arq == NULL){
         printf("erro\n");
@@ -84,16 +109,17 @@ void escExt(char arquivo[], float valor, char moeda[]){
     time(&t); // le o horario atual pra imprimir o extrato
     
     if(strcmp(moeda, "r") == 0){
-        fprintf(arq, "Depositado %f em reais na data %s", valor, ctime(&t));
+        fprintf(arq, "Depositado %f em Reais na data %s", valor, ctime(&t));
     } else if(strcmp(moeda, "bc") == 0){
-        fprintf(arq, "Depositado %f em bitcoin na data %s", valor, ctime(&t));
+        fprintf(arq, "Depositado %f em BitCoin na data %s", valor, ctime(&t));
     } else if(strcmp(moeda, "eth") == 0){
-        fprintf(arq, "Depositado %f em ethereum na data %s", valor, ctime(&t));
+        fprintf(arq, "Depositado %f em Ethereum na data %s", valor, ctime(&t));
     } else{
-        fprintf(arq, "Depositado %f em ripple na data %s", valor, ctime(&t));
+        fprintf(arq, "Depositado %f em Ripple na data %s", valor, ctime(&t));
     }
     
     fclose(arq);
+    menu(user);
 }
 
 float lerVar(const char *arquivo, const char *variavel){
@@ -167,6 +193,8 @@ void escVar(const char *arquivo, const char *variavel, float valor){
 
 void menu(int user){
     int esc;
+    
+    printf("----------------------------------------");
     printf("Menu:\n");
     printf("1. Consultar Saldo\n"
     "2. Consultar Extrato\n"
@@ -176,6 +204,7 @@ void menu(int user){
     "6. Vender Criptomoedas\n"
     "7. Atualizar Cotacao\n"
     "8. Sair\n");
+    printf("----------------------------------------");
     printf("Digite sua escolha: ");
     scanf("%d", &esc);
     switch(esc){
@@ -183,7 +212,7 @@ void menu(int user){
             consSaldo(user);
             break;
         case 2:
-            printf("Escolha 2");
+            consExt(user);
             break;
     }
 }
