@@ -15,3 +15,6 @@ histórico de transações do usuário, e "cpfesenha.txt" que, como o nome indic
 Foram criadas funções especificamente para ler ou escrever nos arquivos, visto que o código é grande.
 
 O programa permite que o usuário consulte seu saldo e extrato, deposite ou saque reais e compre ou venda criptomoedas.
+
+Cada usuário tem seu próprio CPF e senha. Para simplificar, o CPF fo usuário é apenas um número - de 1 a 10 - e sua senha é o mesmo número seguido de "2345"
+Por exemplo, o usuário 4 é dono da pasta "user4", seu CPF é "4" e sua senha é "42345"
