@@ -1,20 +1,9 @@
 # Des Alg Proj1
- Projeto 1 do curso de desenvolvimento de algoritmos
+ Projeto 3 do curso de desenvolvimento de algoritmos
 
 Integrantes:
-Sergio de Siqueira Santos - 22.124.082-3
 André Lima Pereira - 24.124.051-4
 
 O projeto é executado executando "projeto.exe", na pasta "output"
 
-O objetivo do projeto é simular uma exchange de criptomoedas. Com o crescimento do mundo das criptomoedas, é interessante simular uma transação de Bitcoin, Ethereum e Ripple,
-mesmo que seja apenas para fins didáticos.
-
-O projeto pode armazenar os dados de até 10 usuários, cada umm com sua própria pasta contendo 3 arquivos: "dados.txt", que armazena o saldo das quatro moedas e suas cotas, "extrato.txt", que armazena o
-histórico de transações do usuário, e "cpfesenha.txt" que, como o nome indica, armazena o CPF e senha do usuário.
-Foram criadas funções especificamente para ler ou escrever nos arquivos, visto que o código é grande.
-
-O programa permite que o usuário consulte seu saldo e extrato, deposite ou saque reais e compre ou venda criptomoedas.
-
-Cada usuário tem seu próprio CPF e senha. Para simplificar, o CPF do usuário é apenas um número - de 1 a 10 - e sua senha é o mesmo número seguido de "2345"
-Por exemplo, o usuário 4 é dono da pasta "user4", seu CPF é "4" e sua senha é "42345"
+O objetivo do projeto, Deverá implementar as funcionalidades para o administrador da sua exchange de forma que o seu projeto tenha 2 programas (módulos) independentes: um para o investidor e outro para o administrador.
